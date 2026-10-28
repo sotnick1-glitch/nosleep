@@ -1,5 +1,6 @@
 import Cocoa
 import IOKit.pwr_mgt
+import Carbon.HIToolbox
 
 // Ноутбук: спит — контур экрана и «zz»; не спит — экран залит и в нём открытый глаз. t: 0 = спит, 1 = не спит.
 func icon(_ t: CGFloat) -> NSImage {
@@ -123,12 +124,21 @@ final class App: NSObject, NSApplicationDelegate {
         sig = DispatchSource.makeSignalSource(signal: SIGUSR1, queue: .main)
         sig?.setEventHandler { [self] in toggle() }
         sig?.resume()
+
+        // глобальная горячая клавиша ⌃⌥Z — Carbon-вариант не просит никаких разрешений в настройках
+        var spec = EventTypeSpec(eventClass: OSType(kEventClassKeyboard), eventKind: UInt32(kEventHotKeyPressed))
+        InstallEventHandler(GetApplicationEventTarget(), { _, _, _ in delegate.toggle(); return noErr }, 1, &spec, nil, nil)
+        var ref: EventHotKeyRef?
+        RegisterEventHotKey(UInt32(kVK_ANSI_Z), UInt32(controlKey | optionKey),
+                            EventHotKeyID(signature: 0x4E534C50, id: 1), GetApplicationEventTarget(), 0, &ref)
     }
 
     @objc func click() {
         let e = NSApp.currentEvent
         if e?.type == .rightMouseUp || e?.modifierFlags.contains(.control) == true {
             let m = NSMenu()
+            m.addItem(withTitle: "Горячая клавиша: ⌃⌥Z", action: nil, keyEquivalent: "")
+            m.addItem(.separator())
             m.addItem(withTitle: "Выйти", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
             item.menu = m
             item.button?.performClick(nil)

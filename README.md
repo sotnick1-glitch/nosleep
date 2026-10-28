@@ -9,6 +9,7 @@ A tiny macOS menu bar app: one click keeps your Mac awake, another click restore
 
 ### Как пользоваться
 - **Клик по иконке** — переключить. Ноутбук с «zz» — сон обычный. Ноутбук с открытым глазом — Mac не засыпает (экран тоже не гаснет).
+- **⌃⌥Z** (Control + Option + Z) — то же самое с клавиатуры, из любого приложения.
 - Под иконкой на секунду появляется плашка **Sleep** / **No Sleep**.
 - **Правый клик** по иконке — меню с пунктом «Выйти».
 - При запуске всегда включён обычный сон. После выхода из программы запрет сна снимается.
@@ -37,6 +38,7 @@ A tiny macOS menu bar app: one click keeps your Mac awake, another click restore
 
 ### Usage
 - **Click the icon** to toggle. Laptop with "zz" = normal sleep. Laptop with an open eye = your Mac stays awake (the display stays on too).
+- **⌃⌥Z** (Control + Option + Z) does the same from the keyboard, in any app.
 - A small **Sleep** / **No Sleep** label pops up under the icon for a moment.
 - **Right-click** the icon for a menu with Quit.
 - It always starts with normal sleep enabled. Quitting the app releases the sleep block.
